@@ -1,9 +1,14 @@
 
-export const getSquaredNumbers = arr => arr.map(num => num * num);
+export const getSquaredArray = (numbers) => {
+    return numbers.map(num => num * num);
+};
 
 
-export const getOddNumbers = arr => arr.filter(num => num % 2 === 1);
+export const getOddNumbers = (numbers) => {
+    return numbers.filter(num => num % 2 !== 0);
+};
 
 
-const sum = (a, b) => a + b;
-export default sum;
+export default (a, b) => {
+    return a + b;
+};
