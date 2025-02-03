@@ -1,20 +1,25 @@
-function getTitle() {
+'use strict';
+
+
+export function getTitle() {
     const titleElem = document.querySelector('.title');
-    return titleElem ? titleElem.textContent : ''; // Если элемент найден, вернуть текст, иначе пустую строку
+    return titleElem ? titleElem.textContent : ''; 
 }
 
-function getDescription() {
+
+export function getDescription() {
     const descriptionElem = document.querySelector('.about');
     return descriptionElem ? descriptionElem.innerText : '';
 }
 
-function getPlans() {
+
+export function getPlans() {
     const plansElem = document.querySelector('.plans');
     return plansElem ? plansElem.innerHTML : '';
 }
 
-function getGoal() {
+
+export function getGoal() {
     const goalElem = document.querySelector('.goal');
     return goalElem ? goalElem.outerHTML : '';
 }
-
