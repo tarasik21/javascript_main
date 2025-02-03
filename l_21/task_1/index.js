@@ -13,7 +13,7 @@ export const tasks = [
  * @return {undefined}
  */
 const renderTasks = (tasksList) => {
-  const tasksContainer = document.querySelector('.list'); /
+  const tasksContainer = document.querySelector('.list'); 
   tasksContainer.innerHTML = ''; 
 
   const listItemElems = tasksList.map(task => {
@@ -27,13 +27,21 @@ const renderTasks = (tasksList) => {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.classList.add('list__item-checkbox');
-    checkbox.checked = task.done; 
+    checkbox.checked = task.done;
 
-    listItemElem.append(checkbox, task.text);
+    checkbox.addEventListener('change', () => {
+      task.done = checkbox.checked;
+      renderTasks(tasks); 
+    });
+
+    listItemElem.append(checkbox, task.text); 
     return listItemElem;
   });
 
   tasksContainer.append(...listItemElems); 
 };
 
-renderTasks(tasks); 
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderTasks(tasks);
+});
