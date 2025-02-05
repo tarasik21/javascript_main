@@ -1,60 +1,46 @@
-const divElem = document.querySelector('.rect_div');
-const pElem = document.querySelector('.rect_p');
-const spanElem = document.querySelector('.rect_span');
-const eventsListElem = document.querySelector('.events-list');
-
-
 const logTarget = (text, color) => {
+    const eventsList = document.querySelector('.events-list');
     const span = document.createElement('span');
-    span.textContent = text;
     span.style.color = color;
     span.style.marginLeft = '8px';
-    eventsListElem.appendChild(span);
+    span.textContent = text;
+    eventsList.appendChild(span);
 };
 
-
+// Обработчики всплытия (bubbling)
 const logGreenDiv = () => logTarget('DIV', 'green');
 const logGreenP = () => logTarget('P', 'green');
 const logGreenSpan = () => logTarget('SPAN', 'green');
 
+// Обработчики погружения (capturing)
 const logGreyDiv = () => logTarget('DIV', 'grey');
 const logGreyP = () => logTarget('P', 'grey');
 const logGreySpan = () => logTarget('SPAN', 'grey');
 
-
 const attachHandlers = () => {
-    divElem.addEventListener('click', logGreenDiv, false);
-    divElem.addEventListener('click', logGreyDiv, true);
+    document.querySelector('.rect_div').addEventListener('click', logGreenDiv, false);
+    document.querySelector('.rect_p').addEventListener('click', logGreenP, false);
+    document.querySelector('.rect_span').addEventListener('click', logGreenSpan, false);
 
-    pElem.addEventListener('click', logGreenP, false);
-    pElem.addEventListener('click', logGreyP, true);
-
-    spanElem.addEventListener('click', logGreenSpan, false);
-    spanElem.addEventListener('click', logGreySpan, true);
+    document.querySelector('.rect_div').addEventListener('click', logGreyDiv, true);
+    document.querySelector('.rect_p').addEventListener('click', logGreyP, true);
+    document.querySelector('.rect_span').addEventListener('click', logGreySpan, true);
 };
 
 const removeHandlers = () => {
-    divElem.removeEventListener('click', logGreenDiv, false);
-    divElem.removeEventListener('click', logGreyDiv, true);
+    document.querySelector('.rect_div').removeEventListener('click', logGreenDiv, false);
+    document.querySelector('.rect_p').removeEventListener('click', logGreenP, false);
+    document.querySelector('.rect_span').removeEventListener('click', logGreenSpan, false);
 
-    pElem.removeEventListener('click', logGreenP, false);
-    pElem.removeEventListener('click', logGreyP, true);
-
-    spanElem.removeEventListener('click', logGreenSpan, false);
-    spanElem.removeEventListener('click', logGreySpan, true);
+    document.querySelector('.rect_div').removeEventListener('click', logGreyDiv, true);
+    document.querySelector('.rect_p').removeEventListener('click', logGreyP, true);
+    document.querySelector('.rect_span').removeEventListener('click', logGreySpan, true);
 };
-
 
 const clearEvents = () => {
-    eventsListElem.innerHTML = '';
+    document.querySelector('.events-list').innerHTML = '';
 };
 
-
-document.querySelector('.attach-handlers-btn')
-    .addEventListener('click', attachHandlers);
-
-document.querySelector('.remove-handlers-btn')
-    .addEventListener('click', removeHandlers);
-
-document.querySelector('.clear-btn')
-    .addEventListener('click', clearEvents);
+document.querySelector('.attach-handlers-btn').addEventListener('click', attachHandlers);
+document.querySelector('.remove-handlers-btn').addEventListener('click', removeHandlers);
+document.querySelector('.clear-btn').addEventListener('click', clearEvents);
