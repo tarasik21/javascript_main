@@ -1,44 +1,51 @@
+const divElem = document.querySelector('.rect_div');
+const pElem = document.querySelector('.rect_p');
+const spanElem = document.querySelector('.rect_span');
+const eventsListElem = document.querySelector('.events-list');
+
+
 const logTarget = (text, color) => {
-    const eventsList = document.querySelector('.events-list');
     const span = document.createElement('span');
+    span.textContent = text;
     span.style.color = color;
     span.style.marginLeft = '8px';
-    span.textContent = text;
-    eventsList.appendChild(span);
+    eventsListElem.appendChild(span);
 };
 
-// Обработчики всплытия (bubbling)
+
 const logGreenDiv = () => logTarget('DIV', 'green');
 const logGreenP = () => logTarget('P', 'green');
 const logGreenSpan = () => logTarget('SPAN', 'green');
 
-// Обработчики погружения (capturing)
+
 const logGreyDiv = () => logTarget('DIV', 'grey');
 const logGreyP = () => logTarget('P', 'grey');
 const logGreySpan = () => logTarget('SPAN', 'grey');
 
 const attachHandlers = () => {
-    document.querySelector('.rect_div').addEventListener('click', logGreenDiv, false);
-    document.querySelector('.rect_p').addEventListener('click', logGreenP, false);
-    document.querySelector('.rect_span').addEventListener('click', logGreenSpan, false);
+    divElem.addEventListener('click', logGreenDiv, { capture: false, passive: false });
+    divElem.addEventListener('click', logGreyDiv, { capture: true, passive: false });
 
-    document.querySelector('.rect_div').addEventListener('click', logGreyDiv, true);
-    document.querySelector('.rect_p').addEventListener('click', logGreyP, true);
-    document.querySelector('.rect_span').addEventListener('click', logGreySpan, true);
+    pElem.addEventListener('click', logGreenP, { capture: false, passive: false });
+    pElem.addEventListener('click', logGreyP, { capture: true, passive: false });
+
+    spanElem.addEventListener('click', logGreenSpan, { capture: false, passive: false });
+    spanElem.addEventListener('click', logGreySpan, { capture: true, passive: false });
 };
 
 const removeHandlers = () => {
-    document.querySelector('.rect_div').removeEventListener('click', logGreenDiv, false);
-    document.querySelector('.rect_p').removeEventListener('click', logGreenP, false);
-    document.querySelector('.rect_span').removeEventListener('click', logGreenSpan, false);
+    divElem.removeEventListener('click', logGreenDiv, { capture: false });
+    divElem.removeEventListener('click', logGreyDiv, { capture: true });
 
-    document.querySelector('.rect_div').removeEventListener('click', logGreyDiv, true);
-    document.querySelector('.rect_p').removeEventListener('click', logGreyP, true);
-    document.querySelector('.rect_span').removeEventListener('click', logGreySpan, true);
+    pElem.removeEventListener('click', logGreenP, { capture: false });
+    pElem.removeEventListener('click', logGreyP, { capture: true });
+
+    spanElem.removeEventListener('click', logGreenSpan, { capture: false });
+    spanElem.removeEventListener('click', logGreySpan, { capture: true });
 };
 
 const clearEvents = () => {
-    document.querySelector('.events-list').innerHTML = '';
+    eventsListElem.innerHTML = '';
 };
 
 document.querySelector('.attach-handlers-btn').addEventListener('click', attachHandlers);
