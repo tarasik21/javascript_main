@@ -1,13 +1,11 @@
 
-document.addEventListener("DOMContentLoaded", function () {
+const checkbox = document.querySelector('.task-status');
 
-    const inputElem = document.querySelector('.text-input');
-    const statusElem = document.querySelector('.task-status');
-    
 
-    inputElem.addEventListener("input", function() {
+checkbox.addEventListener('change', function() {
 
-      console.log("Checkbox checked:", statusElem.checked);
-    });
-  });
+  console.log(checkbox.checked);
   
+
+  console.log('value property:', checkbox.value);
+});
