@@ -1,6 +1,9 @@
-const statusElem = document.querySelector('.task_status'); 
-const inputElem = document.querySelector('.text-input')
 
-statusElem.addEventListener("change", function() {
-  console.log(statusElem.checked); 
+const inputElem = document.querySelector('.text-input'); 
+const statusElem = document.querySelector('.task-status'); 
+
+
+inputElem.addEventListener("input", function() {
+
+  console.log("Checkbox checked:", statusElem.checked);
 });
