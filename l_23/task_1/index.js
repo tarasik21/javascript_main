@@ -5,39 +5,53 @@ document.addEventListener("DOMContentLoaded", () => {
     const emailError = document.querySelector(".error-text_email");
     const passwordError = document.querySelector(".error-text_password");
   
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-  
-      let isValid = true;
-  
+    // Функция валидации email
+    function validateEmail() {
       if (!emailInput.value) {
         emailError.textContent = "Required";
-        isValid = false;
       } else if (!emailInput.value.includes("@")) {
         emailError.textContent = "Should be an email";
-        isValid = false;
       } else {
         emailError.textContent = "";
       }
+    }
   
+    // Функция валидации password
+    function validatePassword() {
       if (!passwordInput.value) {
         passwordError.textContent = "Required";
-        isValid = false;
       } else {
         passwordError.textContent = "";
       }
+    }
   
-      if (isValid) {
-        const formData = Object.fromEntries(new FormData(form));
-        alert(JSON.stringify(formData));
+    // Валидация при потере фокуса
+    emailInput.addEventListener("blur", validateEmail);
+    passwordInput.addEventListener("blur", validatePassword);
+  
+    // Валидация при изменении данных
+    emailInput.addEventListener("input", () => {
+      if (emailInput.value) {
+        emailError.textContent = "";
       }
     });
   
-    form.addEventListener("input", (event) => {
-      if (event.target === emailInput) {
-        emailError.textContent = "";
-      } else if (event.target === passwordInput) {
+    passwordInput.addEventListener("input", () => {
+      if (passwordInput.value) {
         passwordError.textContent = "";
+      }
+    });
+  
+    // Обработчик отправки формы
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+  
+      validateEmail();
+      validatePassword();
+  
+      if (!emailError.textContent && !passwordError.textContent) {
+        const formData = Object.fromEntries(new FormData(form));
+        alert(JSON.stringify(formData));
       }
     });
   });
