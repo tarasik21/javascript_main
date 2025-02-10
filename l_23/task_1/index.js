@@ -1,58 +1,63 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector(".login-form");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const emailError = document.querySelector(".error-text_email");
-    const passwordError = document.querySelector(".error-text_password");
+const emailInputElem = document.querySelector('#email');
+const passwordInputElem = document.querySelector('#password');
+const formElem = document.querySelector('.login-form');
+
+
+const emailErrorElem = document.querySelector('.error-text_email');
+const passwordErrorElem = document.querySelector('.error-text_password');
+
+
+const isEmail = email => email.includes('@');
+
+const onEmailChange = event => {
+  const isValidEmail = isEmail(event.target.value);
   
-    // Функция валидации email
-    function validateEmail() {
-      if (!emailInput.value) {
-        emailError.textContent = "Required";
-      } else if (!emailInput.value.includes("@")) {
-        emailError.textContent = "Should be an email";
-      } else {
-        emailError.textContent = "";
-      }
-    }
+  if (!event.target.value) {
+    emailErrorElem.textContent = 'Required';
+    emailInputElem.classList.add('invalid');
+  } else if (!isValidEmail) {
+    emailErrorElem.textContent = 'Should be an email';
+    emailInputElem.classList.add('invalid');
+  } else {
+    emailErrorElem.textContent = '';
+    emailInputElem.classList.remove('invalid');
+  }
+};
+
+const onPasswordChange = event => {
+  if (!event.target.value) {
+    passwordErrorElem.textContent = 'Required';
+    passwordInputElem.classList.add('invalid');
+  } else {
+    passwordErrorElem.textContent = '';
+    passwordInputElem.classList.remove('invalid');
+  }
+};
+
+
+emailInputElem.addEventListener('input', onEmailChange);
+passwordInputElem.addEventListener('input', onPasswordChange);
+
+
+const onFormSubmit = event => {
+  event.preventDefault();
   
-    // Функция валидации password
-    function validatePassword() {
-      if (!passwordInput.value) {
-        passwordError.textContent = "Required";
-      } else {
-        passwordError.textContent = "";
-      }
-    }
+  const formData = Object.fromEntries(new FormData(formElem));
   
-    // Валидация при потере фокуса
-    emailInput.addEventListener("blur", validateEmail);
-    passwordInput.addEventListener("blur", validatePassword);
+
+  if (!formData.email) {
+    emailErrorElem.textContent = 'Required';
+    emailInputElem.classList.add('invalid');
+  }
   
-    // Валидация при изменении данных
-    emailInput.addEventListener("input", () => {
-      if (emailInput.value) {
-        emailError.textContent = "";
-      }
-    });
+  if (!formData.password) {
+    passwordErrorElem.textContent = 'Required';
+    passwordInputElem.classList.add('invalid');
+  }
   
-    passwordInput.addEventListener("input", () => {
-      if (passwordInput.value) {
-        passwordError.textContent = "";
-      }
-    });
-  
-    // Обработчик отправки формы
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-  
-      validateEmail();
-      validatePassword();
-  
-      if (!emailError.textContent && !passwordError.textContent) {
-        const formData = Object.fromEntries(new FormData(form));
-        alert(JSON.stringify(formData));
-      }
-    });
-  });
-  
+  if (formData.email && formData.password && isEmail(formData.email)) {
+    alert(JSON.stringify(formData));
+  }
+};
+
+formElem.addEventListener('submit', onFormSubmit);
