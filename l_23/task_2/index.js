@@ -1,63 +1,48 @@
-const generateNumbersRange = (from, to) => {
-    const result = [];
-    for (let i = from; i <= to; i++) {
-        result.push(i);
-    }
-    return result;
-};
-
-const getLineSeats = () => {
-    return generateNumbersRange(1, 10)
-        .map(seatNumber => `
-            <div 
-                class="sector__seat" 
-                data-seat-number="${seatNumber}"
-            ></div>
-        `).join('');
-};
-
-const getSectorLines = () => {
-    const seatsString = getLineSeats();
-    return generateNumbersRange(1, 10)
-        .map(lineNumber => `
-            <div 
-                class="sector__line" 
-                data-line-number="${lineNumber}"
-            >${seatsString}</div>
-        `).join('');
-};
-
 const arenaElem = document.querySelector('.arena');
+const selectedSeatElem = document.querySelector('.board__selected-seat');
 
-const renderArena = () => {
-    const linesString = getSectorLines();
 
-    const sectorsString = generateNumbersRange(1, 3)
-        .map(sectorNumber => `
-            <div 
-                class="sector" 
-                data-sector-number="${sectorNumber}"
-            >${linesString}</div>
-        `).join('');
+function createSector() {
+  const sector = document.createElement('div');
+  sector.classList.add('sector');
 
-    arenaElem.innerHTML = sectorsString;
-};
 
-const onSeatSelect = event => {
-    const isSeat = event.target.classList.contains('sector__seat');
+  for (let lineNum = 1; lineNum <= 10; lineNum++) {
+    const line = document.createElement('div');
+    line.classList.add('sector__line');
 
-    if (!isSeat) {
-        return;
+
+    for (let seatNum = 1; seatNum <= 10; seatNum++) {
+      const seat = document.createElement('div');
+      seat.classList.add('sector__seat');
+      seat.dataset.lineNumber = lineNum;
+      seat.dataset.seatNumber = seatNum;
+      line.append(seat);
     }
 
-    const seatNumber = event.target.dataset.seatNumber;
-    const lineNumber = event.target.closest('.sector__line').dataset.lineNumber;
-    const sectorNumber = event.target.closest('.sector').dataset.sectorNumber;
+    sector.append(line);
+  }
 
-    const selectedSeatElem = document.querySelector('.board__selected-seat');
-    selectedSeatElem.textContent = `S ${sectorNumber} - L ${lineNumber} - S ${seatNumber}`;
-};
+  return sector;
+}
 
-arenaElem.addEventListener('click', onSeatSelect);
 
-renderArena();
+for (let sectorNum = 1; sectorNum <= 3; sectorNum++) {
+  const sector = createSector();
+  sector.dataset.sectorNumber = sectorNum;
+  arenaElem.append(sector);
+}
+
+
+arenaElem.addEventListener('click', event => {
+  if (!event.target.classList.contains('sector__seat')) {
+    return;
+  }
+
+  const seatElem = event.target;
+  const sectorNumber = seatElem.closest('.sector').dataset.sectorNumber;
+  const lineNumber = seatElem.dataset.lineNumber;
+  const seatNumber = seatElem.dataset.seatNumber;
+
+  selectedSeatElem.textContent = `S ${sectorNumber} - L ${lineNumber} - S ${seatNumber}`;
+});
