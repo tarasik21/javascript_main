@@ -4,7 +4,7 @@
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed']
 
 
-const getDayofWeek = (date, days) =>{
+export const getDayofWeek = (date, days) =>{
     const day = new Date(date).getDate();
     const dateInFuture new Date(date).setDate(day + days);
 
