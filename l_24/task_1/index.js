@@ -1,7 +1,7 @@
 'use strict';
 
 
-const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 
 export const dayOfWeek = (date, days) => {
@@ -10,7 +10,6 @@ export const dayOfWeek = (date, days) => {
     
 
     dateInFuture.setDate(dateInFuture.getDate() + days);
-
 
     return weekDays[dateInFuture.getDay()];
 };
