@@ -1,14 +1,19 @@
 'use strict';
 
-// put your code here
-const weekDays = ['Sun', 'Mon', 'Tue', 'Wed']
+
+const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+export const getDayofWeek = (date, days) => {
+
+    const dateInFuture = new Date(date);
+    
+
+    dateInFuture.setDate(dateInFuture.getDate() + days);
 
 
-export const getDayofWeek = (date, days) =>{
-    const day = new Date(date).getDate();
-    const dateInFuture new Date(date).setDate(day + days);
-
-    return weekDays[new Date(dateInFuture).getDate()];
+    return weekDays[dateInFuture.getDay()];
 };
-const result = getDayofWeek(new Date(2019, 0, 1) 14);
+
+
+const result = getDayofWeek(new Date(2019, 0, 1), 14);
 console.log(result);
