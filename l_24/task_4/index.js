@@ -1,6 +1,6 @@
 export function studentsBirthDays(students) {
 
-    students.sort((a, b) => new Date(a.birthDate) - new Date(b.birthDate));
+    students.sort((a, b) => new Date(b.birthDate) - new Date(a.birthDate));
 
 
     const groupedByMonth = students.reduce((acc, { name, birthDate }) => {
