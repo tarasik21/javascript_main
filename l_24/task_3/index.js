@@ -5,4 +5,4 @@ export const getDiffFormatted = (startDate, endDate) => {
     return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
 };
 
-console.log(getDiffFormatted(start, end)); 
+console.log(getDiffFormatted(startDate, endDate)); 
